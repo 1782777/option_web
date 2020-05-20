@@ -81,29 +81,37 @@ function myChart2(id){
 
 function Bar(id){
     var myChart = echarts.init(document.getElementById(id));
-    var option = {
+    myChart.setOption({
         title: {
-            text: '我的钱包' ,
-            textStyle:{
-                fontSize:14
-            }       
+            text: '异步数据加载示例'
         },
-        color:["#aaaaaa"],
+        tooltip: {},
+        legend: {
+            data:['销量']
+        },
         xAxis: {
-            type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: []
         },
-        yAxis: {
-            type: 'value'
-        },
+        yAxis: {},
         series: [{
-            data: [120, 200, 150, 80, 70, 110, 130],
+            name: '销量',
             type: 'bar',
-            showBackground: true,
-            backgroundStyle: {
-                color: 'rgba(220, 220, 220, 0.8)'
-            }
+            data: []
         }]
-    };
-    myChart.setOption(option);
+    });
+    
+    // 异步加载json格式数据
+    $.getJSON('http://127.0.0.1:8080/json',function(data){
+        print(data);
+        myChart.setOption({
+            xAxis: {
+                data: data.categories
+            },
+            series: [{
+                // 根据名字对应到相应的系列
+                name: '销量',
+                data: data.data
+            }]
+        });
+    });
 }

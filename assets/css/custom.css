@@ -1,0 +1,7 @@
+/* your styles go here */
+.aline {
+    width: 550px;
+    height: 400px;
+    display: inline-block;
+    margin-left: 1px;margin-right: 10px;
+  }

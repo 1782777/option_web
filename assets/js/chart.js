@@ -5,7 +5,19 @@ function myChart(id){
     // 指定图表的配置项和数据
     var option = {
     title: {
-        text: '我的头发'         
+        text: '我的头发' ,  
+        textStyle:{
+            // //文字颜色
+            // color:'#ccc',
+            // //字体风格,'normal','italic','oblique'
+            // fontStyle:'normal',
+            // //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+            // fontWeight:'bold',
+            // //字体系列
+            // fontFamily:'sans-serif',
+            // //字体大小
+    　　　　 fontSize:14
+        }      
     },
     color:["#61a0a8"],
     tooltip: {},
@@ -37,7 +49,11 @@ function myChart2(id){
     // 指定图表的配置项和数据
     var option = {
     title: {
-        text: '我的体重'         
+        text: '我的体重',     
+        textStyle:{
+            fontSize:14
+        }
+
     },
     color:["#61a0a8"],
     tooltip: {},
@@ -67,7 +83,10 @@ function Bar(id){
     var myChart = echarts.init(document.getElementById(id));
     var option = {
         title: {
-            text: '我的钱包'         
+            text: '我的钱包' ,
+            textStyle:{
+                fontSize:14
+            }       
         },
         color:["#aaaaaa"],
         xAxis: {

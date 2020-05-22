@@ -83,7 +83,10 @@ function Bar(id){
     var myChart = echarts.init(document.getElementById(id));
     myChart.setOption({
         title: {
-            text: '异步数据加载示例'
+            text: '异步数据加载示例',
+            textStyle:{
+                fontSize:14
+            }
         },
         tooltip: {},
         legend: {

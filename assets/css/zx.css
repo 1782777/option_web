@@ -1,0 +1,13 @@
+.divcss5{ background:rgb(20, 20, 20); color:#FFF} 
+
+#loader {
+    background: #297ACC;
+    bottom: 0;
+    height: 100px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 100;
+    width: 100%;
+    z-index: 9999;
+}

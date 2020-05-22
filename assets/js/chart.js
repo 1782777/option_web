@@ -30,7 +30,7 @@ function myChart(id){
     series: [{
         name: 'count',
         type: 'line',
-        data: [11, 11, 15, 13, 12, 13, 10] , 
+        data: [11, 11, 15, 13, 12, 13, 100] , 
         areaStyle: {}       
     },
     {
@@ -66,7 +66,7 @@ function myChart2(id){
     series: [{
         name: 'weight',
         type: 'line',
-        data: [11, 17, 25, 23, 22, 23, 20] ,
+        data: [11, 17, 25, 23, 22, 523, 20] ,
         smooth: true         
     },
     {

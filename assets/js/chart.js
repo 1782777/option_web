@@ -7,16 +7,7 @@ function myChart(id){
     title: {
         text: '我的头发' ,  
         textStyle:{
-            // //文字颜色
-            // color:'#ccc',
-            // //字体风格,'normal','italic','oblique'
-            // fontStyle:'normal',
-            // //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
-            // fontWeight:'bold',
-            // //字体系列
-            // fontFamily:'sans-serif',
-            // //字体大小
-    　　　　 fontSize:14
+            fontSize:14
         }      
     },
     color:["#61a0a8"],
@@ -99,22 +90,65 @@ function Bar(id){
         series: [{
             name: '销量',
             type: 'bar',
-            data: []
+            data: [1,2,3,4,5,6,7]
         }]
     });
+    myChart.showLoading();
+
+
+    
+
+    $.ajax({
+        type : "get",
+        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        url : "http://127.0.0.1:8080/json/",    //请求发送到TestServlet处
+        data : {},
+        dataType : "json",        //返回数据形式为json
+        success : function(data) {
+            //请求成功时执行该函数内容，result即为服务器返回的json对象
+            myChart.hideLoading();
+            console.log(11111);
+            if (data) {
+                myChart.setOption({
+                    xAxis: {
+                        data: data.time
+                        
+                    },
+                    series: [{
+                        // 根据名字对应到相应的系列
+                        name: '销量',
+                        data: data.iv
+                        
+                    }]
+                });
+                   
+            }
+        
+       },
+        error : function(errorMsg) {
+            //请求失败时执行该函数
+            alert("图表请求数据失败!");
+            myChart.hideLoading();
+        }
+   })
+
     
     // 异步加载json格式数据
-    $.getJSON('http://127.0.0.1:8080/json',function(data){
-        print(data);
-        myChart.setOption({
-            xAxis: {
-                data: data.categories
-            },
-            series: [{
-                // 根据名字对应到相应的系列
-                name: '销量',
-                data: data.data
-            }]
-        });
-    });
+    // $.getJSON('http://127.0.0.1:8080/json',function(data){
+    //     console.log(data.iv);
+    //     console.log("1111111111111111111");
+    //     myChart.setOption({
+    //         xAxis: {
+    //             data: data.time
+                
+    //         },
+    //         series: [{
+    //             // 根据名字对应到相应的系列
+    //             name: '销量',
+    //             data: data.iv
+                
+    //         }]
+    //     });
+        
+    // });
 }

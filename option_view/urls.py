@@ -7,4 +7,5 @@ urlpatterns = [
     # path('json/', views.test),
     # path('save/', views.test_add_db),
     # path('load/', views.test_load_db),
+    path('json/', views.get_ivmean),
 ]

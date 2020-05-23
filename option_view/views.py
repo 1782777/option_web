@@ -1,11 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
-from option_view.models import option
+from option_view.models import option,iv_mean
 # Create your views here.
 def test_view(request):
     return render(request,'index.html')
     #return render(request,'index.html')
+
+def get_ivmean(request):
+    ivall = iv_mean.objects.all()
+    print (len(ivall))
+    msg_dic ={'type':'onepath'}
+    ivlist = []
+    timelist =[]
+    for iv in ivall:
+        ivlist.append(iv.iv)
+        timelist.append(iv.time)
+    dic ={'iv':ivlist,'time':timelist}
+    return JsonResponse(dic)
 
 # def test(request):
 #     result = {"categories":['1','2','3','4','5','6'], "data":[1,2,3,4,5,6]}

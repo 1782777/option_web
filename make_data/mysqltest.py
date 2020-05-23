@@ -1,27 +1,36 @@
 import pymysql
 import datetime
+import random
 
-db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = 'zx111111',
-                          database='option_data',port=3306,charset='utf8')
-
-d = datetime.datetime(2017, 8, 18, 9, 30, 0)
-for i in range(1440):
-    d =  d+datetime.timedelta(seconds=5)
-    dd =d.strftime('%H:%M:%S')
-
-    sql="insert into option_view_option(time) values('%d')" 
-
-    data=(
-
-    create_time,update_time
-
-    )
-
-    cursor.excute(sql%data)
+def make_tabel():
+    db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = 'zx111111',
+                            database='option_data',port=3306,charset='utf8')
+    cursor = db_conn.cursor()
+    d = datetime.datetime(2017, 8, 18, 9, 30, 0)
+    for i in range(1440):
+        d =  d+datetime.timedelta(seconds=5)
+        dd =d.strftime('%H:%M:%S')
+        print(dd)
+        iv = random.randint(0,9)*2.5
+        print(iv)
+        sql="insert into iv_mean(time,iv,target) values(%s,22.5,'etf')" 
         
-    conn.commit()
+        cursor.execute(sql,dd)
 
+    d = datetime.datetime(2017, 8, 18, 13, 0, 0)
+    for i in range(1440):
+        d =  d+datetime.timedelta(seconds=5)
+        dd =d.strftime('%H:%M:%S')
+        print(dd)
+        iv = random.randint(0,9)*2.5
+        print(iv)
+        sql="insert into iv_mean(time,iv,target) values(%s,42.4,'etf')" 
+        cursor.execute(sql,dd)
+    db_conn.commit()
     cursor.close()
 
-    conn.close()
-    print(dd)
+    db_conn.close()
+
+
+if __name__ == '__main__':
+    pass

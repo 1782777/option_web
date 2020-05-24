@@ -4,7 +4,7 @@ import random
 import time
 
 def make_tabel():
-    db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = '123456',
+    db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = 'root',
                             database='option_data',port=3306,charset='utf8')
     cursor = db_conn.cursor()
     d = datetime.datetime(2017, 8, 18, 9, 29, 0)
@@ -33,7 +33,7 @@ def make_tabel():
     db_conn.close()
 
 def insert_test():
-    db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = '123456',
+    db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = 'root',
                             database='option_data',port=3306,charset='utf8')
     cursor = db_conn.cursor()
     for i in range(1000):

@@ -3,41 +3,19 @@ var volume_mean = new Array(244).fill(0);
 function init(){
     $.ajax({
         type : "get",
-        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://img1.money.126.net/data/hs/time/4days/0000016.json",    //请求发送到TestServlet处
+        async : false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        url : "http://182.92.114.73/json/",    //请求发送到TestServlet处
         data : {},
-        dataType : "jsonp",        //返回数据形式为json
+        dataType : "json",        //返回数据形式为json
         success : function(data) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
-            chart_volume.hideLoading();
-            obj = JSON.parse(JSON.stringify(data))
             
-            // console.log(obj.data.length);
-
-            for(var k=0;k<4;k++)
-            {
-                // console.log(obj.data[k].data.length);
-                var tmp = new Array();
-                for (var i=0;i<obj.data[k].data.length;i++)
-                { 
-                    //console.log(obj.data[k].data[i][3]);
-                    var v = obj.data[k].data[i][3];
-                    if(i==241){console.log(v);}
-                    volume_mean[i] = volume_mean[i]+v/4;
-                    if(i==241){console.log(volume_mean[i]);}
-                    // console.log(v);
-                    // volume.push(v);
-                    
-                }
-            }
-            
-            //console.log(volume_mean);
-            
+            obj = JSON.parse(JSON.stringify(data));
+            jsonTime = obj.time;
+            console.log(jsonTime);
         },
         error : function(errorMsg) {
-            //请求失败时执行该函数
-            alert("图表请求数据失败!");
-            chart_volume.hideLoading();
+            console.log(" ");
         }
     })
 }
@@ -61,9 +39,11 @@ function Chart_north(id){
     legend: {},
     toolbox: {},      
     xAxis: [{         
-        data: []
+        data: jsonTime
     }],
-    yAxis: { },
+    yAxis:  [{         
+        axisLabel:{formatter:'{value}亿'}
+    }],
     series: [{
         name: 'hgt',
         type: 'line',
@@ -155,13 +135,17 @@ function Chart_volume(id){
         legend: {},
         toolbox: {},      
         xAxis: [{         
-            data: []
+            data: jsonTime
         }],
-        yAxis: { },
+        yAxis:  [{         
+            min:0,
+            max:2.5,
+        }],
         series: [{
             name: 'today/5day',
             type: 'line',
             data: [] ,
+            areaStyle: {} 
             // smooth: true         
         }]
     };

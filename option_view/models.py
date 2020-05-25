@@ -18,5 +18,10 @@ class iv_mean(models.Model):
     iv = models.FloatField()
     target = models.CharField(max_length=20)
 
+class volume(models.Model):
+    class Meta:
+        db_table='volume'
+    volume = models.FloatField()
+
 
 

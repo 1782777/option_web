@@ -51,7 +51,7 @@ function Chart_north(id){
     // 指定图表的配置项和数据
     var option = {
     title: {
-        text: '我的头发' ,  
+        text: 'NORTH' ,  
         textStyle:{
             fontSize:14
         }      
@@ -106,9 +106,9 @@ function Load_north()
             { 
                 var three = obj.data.s2n[i].split(',');
                 //console.log(three);
-                n1.push(three[1]);
-                n2.push(three[2]);
-                n3.push(three[3]);
+                n1.push(three[1]/10000);
+                n2.push(three[2]/10000);
+                n3.push(three[3]/10000);
             }
             // console.log(n1);
             if (data) {
@@ -144,7 +144,7 @@ function Chart_volume(id){
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '我的体重',     
+            text: 'VOLUME',     
             textStyle:{
                 fontSize:14
             }
@@ -159,7 +159,7 @@ function Chart_volume(id){
         }],
         yAxis: { },
         series: [{
-            name: 'diff',
+            name: 'today/5day',
             type: 'line',
             data: [] ,
             // smooth: true         
@@ -176,43 +176,43 @@ function Load_volume()
     $.ajax({
         type : "get",
         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://img1.money.126.net/data/hs/time/today/0000016.json",    //请求发送到TestServlet处
+        url : "http://182.92.114.73/vol/",    //请求发送到TestServlet处
         data : {},
-        dataType : "jsonp",        //返回数据形式为json
+        dataType : "json",        //返回数据形式为json
         success : function(data) {
-            //请求成功时执行该函数内容，result即为服务器返回的json对象
-            chart_volume.hideLoading();
-            obj = JSON.parse(JSON.stringify(data))
-            var volume = new Array();
-            var diff = new Array();
-            console.log(obj.data.length);
-            for (var i=0;i<obj.data.length;i++)
-            { 
-                // console.log(obj.data[i][3]);
-                var v = obj.data[i][3];
-                //console.log(three);
-                volume.push(v);
+            // //请求成功时执行该函数内容，result即为服务器返回的json对象
+            // chart_volume.hideLoading();
+            // obj = JSON.parse(JSON.stringify(data))
+            // var volume = new Array();
+            // var diff = new Array();
+            // console.log(obj.data.length);
+            // for (var i=0;i<obj.data.length;i++)
+            // { 
+            //     // console.log(obj.data[i][3]);
+            //     var v = obj.data[i][3];
+            //     //console.log(three);
+            //     volume.push(v);
                 
-            }
-            console.log(volume);
-            for (var i=0;i<volume.length;i++)
-            {
-                var d = volume[i]/volume_mean[i];
-                diff.push(d);
-            }
-            //console.log(volume);
+            // }
+            // console.log(volume);
+            // for (var i=0;i<volume.length;i++)
+            // {
+            //     var d = volume[i]/volume_mean[i];
+            //     diff.push(d);
+            // }
+            console.log(data);
             if (data) {
                 chart_volume.setOption({
                     series: [{
-                        name: 'diff',
-                        data: diff
+                        name: 'today/5day',
+                        data: data.vol
                     }]
                 });
             }
         },
         error : function(errorMsg) {
             //请求失败时执行该函数
-            alert("图表请求数据失败!");
+            // alert("图表请求数据失败!");
             chart_volume.hideLoading();
         }
    })

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
-from option_view.models import option,iv_mean
+from option_view.models import option,iv_mean,volume
 # Create your views here.
 def test_view(request):
     return render(request,'index.html')
@@ -19,6 +19,14 @@ def get_ivmean(request):
     dic ={'iv':ivlist,'time':timelist}
     return JsonResponse(dic)
 
+def get_volume(request):
+    volume_ = volume.objects.all()
+    vollist = []
+    for v in volume_:
+        vollist.append(v.volume)
+    dic ={'vol':vollist}
+    return JsonResponse(dic)
+    
 # def test(request):
 #     result = {"categories":['1','2','3','4','5','6'], "data":[1,2,3,4,5,6]}
 #     return JsonResponse(result)

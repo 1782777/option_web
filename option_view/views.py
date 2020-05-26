@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
-from option_view.models import option,iv_mean,volume
+from option_view.models import options,iv_mean,volume
 # Create your views here.
 def test_view(request):
     return render(request,'index.html')

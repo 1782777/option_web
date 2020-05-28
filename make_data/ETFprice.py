@@ -9,9 +9,13 @@ import sqlalchemy
 import threading
 import datetime
 
+NIGHT_TIME = datetime.time(11,30,00)
+MONING_TIME = datetime.time(9,28,00)
+
 class ETFPrice:
     def __init__(self):
         print('ETFPrice')
+        self.isLoop =True
         self.rest_df()
         # print(self.df)
 
@@ -21,7 +25,16 @@ class ETFPrice:
 
     def loop(self):
         while True:
-            self.makedata()
+            c_time = datetime.datetime.now().time()
+            if c_time > NIGHT_TIME:
+                self.isLoop = False
+            if not self.isLoop:
+                if c_time > MONING_TIME:
+                    self.isLoop = True
+                    self.rest_df()
+
+            if self.isLoop:
+                self.makedata()
             time.sleep(15)
 
             
@@ -76,11 +89,9 @@ class ETFPrice:
         # print(self.df)
 
 if __name__ == '__main__':
-    # ETFPrice()
-    # a = input("input:")
+    ETFPrice()
+    a = input("input:")
 
-    t = datetime.time(17,42,00)
-    c = datetime.datetime.now().time()
-    print (t>c)
+    
 
     

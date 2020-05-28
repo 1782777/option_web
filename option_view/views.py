@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
-from option_view.models import options,iv_mean,volume
+from option_view.models import options,iv_mean,volume,etf
+
 # Create your views here.
 def test_view(request):
     return render(request,'index.html')
@@ -25,6 +26,16 @@ def get_volume(request):
     for v in volume_:
         vollist.append(v.volume)
     dic ={'vol':vollist}
+    return JsonResponse(dic)
+
+def get_etf(request):
+    etf_ = etf.objects.all()
+    e50,e300,es = [],[],[]
+    for e in etf_:
+        e50.append(e.etf50)
+        e300.append(e.etf300)
+        es.append(e.es)
+    dic ={'etf50':e50,'etf300':e300,'es':es}
     return JsonResponse(dic)
     
 # def test(request):

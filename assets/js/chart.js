@@ -39,7 +39,7 @@ function Chart_north(id){
     legend: {},
     toolbox: {},      
     xAxis: [{         
-        data: jsonTime
+        data: []
     }],
     yAxis:  [{         
         axisLabel:{formatter:'{value}亿'}
@@ -135,7 +135,7 @@ function Chart_volume(id){
         legend: {},
         toolbox: {},      
         xAxis: [{         
-            data: jsonTime
+            data: []
         }],
         yAxis:  [{         
             min:0,
@@ -203,63 +203,82 @@ function Load_volume()
 }
 
 
-var CharIVX ;
-function Bar(id){
-    CharIVX = echarts.init(document.getElementById(id));
+var CharETF ;
+function Chart_etf(id){
+    CharETF = echarts.init(document.getElementById(id));
     //var myChart = echarts.init(document.getElementById(id));
-    CharIVX.setOption({
+    var option ={
         title: {
-            text: '异步数据加载示例',
+            text: '我的头发量',
             textStyle:{
                 fontSize:14
             }
         },
         tooltip: {},
-        legend: {
-            data:['销量']
-        },
+        legend: {},
         xAxis: {
             data: []
         },
         yAxis: {},
         series: [{
-            name: 'cout',
+            name: '50',
+            type: 'line',
+            data: []
+        },
+        {
+            name: '300',
+            type: 'line',
+            data: []
+        },
+        {
+            name: 'es',
             type: 'line',
             data: []
         }]
-    });
-    
-    Load_QVIX()
-    setInterval(function(){Load_QVIX()}, 10000); 
+    };
+    CharETF.setOption(option);
+    Load_etf()
+    setInterval(function(){Load_etf()}, 10000); 
 }
 
-function Load_QVIX()
+
+function Load_etf()
 {
     $.ajax({
         type : "get",
         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://182.92.114.73/json/",    //请求发送到TestServlet处
+        url : "http://182.92.114.73/etf/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",        //返回数据形式为json
         success : function(data) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
-            CharIVX.hideLoading();
+            CharETF.hideLoading();
             obj = JSON.parse(JSON.stringify(data))
-            console.log(obj.iv);
+            console.log(obj.etf50);
             if (data) {
-                CharIVX.setOption({
+                CharETF.setOption({
                     series: [{
                         // 根据名字对应到相应的系列
-                        name: '销量',
-                        data: data.iv
-                    }]
+                        name: '50',
+                        data: data.etf50
+                    },
+                    {
+                        // 根据名字对应到相应的系列
+                        name: '300',
+                        data: data.etf300
+                    },
+                    {
+                        // 根据名字对应到相应的系列
+                        name: 'es',
+                        data: data.es
+                    },]
                 });
             }
         },
         error : function(errorMsg) {
             //请求失败时执行该函数
             alert("图表请求数据失败!");
-            CharIVX.hideLoading();
+            CharETF.hideLoading();
         }
    })
 }

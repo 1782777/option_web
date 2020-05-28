@@ -9,4 +9,5 @@ urlpatterns = [
     # path('load/', views.test_load_db),
     path('json/', views.get_ivmean),
     path('vol/', views.get_volume),
+    path('etf/', views.get_etf),
 ]

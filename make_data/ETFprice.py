@@ -9,7 +9,7 @@ import sqlalchemy
 import threading
 import datetime
 
-NIGHT_TIME = datetime.time(11,30,00)
+NIGHT_TIME = datetime.time(23,55,00)
 MONING_TIME = datetime.time(9,28,00)
 
 class ETFPrice:
@@ -40,13 +40,14 @@ class ETFPrice:
             
 
     def rest_df(self):
-        time = pd.date_range('9:30:00',freq='30S',periods=330*2+1)
-        self.df = pd.DataFrame(columns=['50','300','es','sz','hs'])
-        self.df['time']= time.time
+        time_ = pd.date_range('20:30:00',freq='30S',periods=330*2+1)
+        self.df = pd.DataFrame(columns=['etf50','etf300','es','sz','hs'])
+        self.df['time']= time_.time
         self.df['id'] = self.df.index
-        print(self.df)
+        #print(self.df)
 
     def makedata(self):
+        print('makedata')
         url = "http://hq.sinajs.cn/list=sh510050"
         needTry = True
         while needTry:
@@ -82,11 +83,12 @@ class ETFPrice:
 
         time_ = data[6]
         current_time= pd.to_datetime(time_).time()
-        index = self.df[self.df['time']>current_time].iloc[0]['id']
-        self.df.loc[index,['50','300','es','sz','hs']] = [etf_50,etf_300,es,0,0]
-        #self.df[self.df['time']>current_time].iloc[0]['50','300','es']=[etf_50,etf_300,es]
-        # last.loc[0,['50','300','es','sz','hs']] =[etf_50,etf_300,es,4,4]
-        # print(self.df)
+        tmp = self.df[self.df['time']>current_time]
+        if len(tmp.index) > 0:
+            index = tmp.iloc[0]['id']
+            self.df.loc[index,['etf50','etf300','es','sz','hs']] = [etf_50,etf_300,es,0,0]
+            engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
+            self.df.to_sql('etf', engine, index=False, if_exists='replace')
 
 if __name__ == '__main__':
     ETFPrice()

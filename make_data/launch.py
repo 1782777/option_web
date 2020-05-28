@@ -1,8 +1,8 @@
 from volume import volume
+from ETFprice import ETFPrice
 import time
 
 if __name__ == '__main__':
     volume()
-    while True:
-        print('launch alive')
-        time.sleep(2)
+    ETFPrice()
+    a = input("input:")

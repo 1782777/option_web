@@ -7,54 +7,54 @@ import json
 import pandas as pd
 import sqlalchemy
 
-def make_tabel():
-    db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = 'root',
-                            database='option_data',port=3306,charset='utf8')
-    cursor = db_conn.cursor()
-    d = datetime.datetime(2017, 8, 18, 9, 29, 0)
-    for i in range(122):
-        d =  d+datetime.timedelta(minutes=1)
-        dd =d.strftime('%H:%M:%S')
-        print(dd)
-        iv = random.randint(0,9)*2.5
-        print(iv)
-        sql="insert into iv_mean(time,iv,target) values(%s,22.5,'etf')" 
+# def make_tabel():
+#     db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = 'root',
+#                             database='option_data',port=3306,charset='utf8')
+#     cursor = db_conn.cursor()
+#     d = datetime.datetime(2017, 8, 18, 9, 29, 0)
+#     for i in range(122):
+#         d =  d+datetime.timedelta(minutes=1)
+#         dd =d.strftime('%H:%M:%S')
+#         print(dd)
+#         iv = random.randint(0,9)*2.5
+#         print(iv)
+#         sql="insert into iv_mean(time,iv,target) values(%s,22.5,'etf')" 
         
-        cursor.execute(sql,dd)
+#         cursor.execute(sql,dd)
 
-    d = datetime.datetime(2017, 8, 18, 12, 59, 0)
-    for i in range(122):
-        d =  d+datetime.timedelta(minutes=1)
-        dd =d.strftime('%H:%M:%S')
-        print(dd)
-        iv = random.randint(0,9)*2.5
-        print(iv)
-        sql="insert into iv_mean(time,iv,target) values(%s,42.4,'etf')" 
-        cursor.execute(sql,dd)
-    db_conn.commit()
-    cursor.close()
+#     d = datetime.datetime(2017, 8, 18, 12, 59, 0)
+#     for i in range(122):
+#         d =  d+datetime.timedelta(minutes=1)
+#         dd =d.strftime('%H:%M:%S')
+#         print(dd)
+#         iv = random.randint(0,9)*2.5
+#         print(iv)
+#         sql="insert into iv_mean(time,iv,target) values(%s,42.4,'etf')" 
+#         cursor.execute(sql,dd)
+#     db_conn.commit()
+#     cursor.close()
 
-    db_conn.close()
+#     db_conn.close()
 
-def make_tabel_45():
-    db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = 'root',
-                            database='option_data',port=3306,charset='utf8')
-    cursor = db_conn.cursor()
-    d = datetime.datetime(2017, 8, 18, 9, 30, 0)
-    for i in range(330*6):
-        d =  d+datetime.timedelta(seconds=10)
-        dd =d.strftime('%H:%M:%S')
-        print(dd)
-        iv = random.randint(0,9)*2.5
-        print(iv)
-        sql="insert into etf(time,etf_50,etf_300,es,etf_hs,etf_sz) values(%s,0,0,0,0,0)" 
+# def make_tabel_45():
+#     db_conn = pymysql.connect(host = 'localhost', user= 'root', passwd = 'root',
+#                             database='option_data',port=3306,charset='utf8')
+#     cursor = db_conn.cursor()
+#     d = datetime.datetime(2017, 8, 18, 9, 30, 0)
+#     for i in range(330*6):
+#         d =  d+datetime.timedelta(seconds=10)
+#         dd =d.strftime('%H:%M:%S')
+#         print(dd)
+#         iv = random.randint(0,9)*2.5
+#         print(iv)
+#         sql="insert into etf(time,etf_50,etf_300,es,etf_hs,etf_sz) values(%s,0,0,0,0,0)" 
         
-        cursor.execute(sql,dd)
+#         cursor.execute(sql,dd)
 
-    db_conn.commit()
-    cursor.close()
+#     db_conn.commit()
+#     cursor.close()
 
-    db_conn.close()
+#     db_conn.close()
 
 
 

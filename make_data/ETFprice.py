@@ -9,7 +9,7 @@ import sqlalchemy
 import threading
 import datetime
 
-NIGHT_TIME = datetime.time(23,55,00)
+NIGHT_TIME = datetime.time(15,5,00)
 MONING_TIME = datetime.time(9,28,00)
 
 class ETFPrice:

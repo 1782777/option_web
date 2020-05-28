@@ -29,7 +29,7 @@ function Chart_north(id){
     // 指定图表的配置项和数据
     var option = {
     title: {
-        text: 'NORTH' ,  
+        text: '我的粉丝' ,  
         textStyle:{
             fontSize:14
         }      
@@ -124,7 +124,7 @@ function Chart_volume(id){
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: 'VOLUME',     
+            text: '我的才艺',     
             textStyle:{
                 fontSize:14
             }

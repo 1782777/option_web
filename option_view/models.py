@@ -25,6 +25,15 @@ class volume(models.Model):
         db_table='volume'
     volume = models.FloatField()
 
+class etf(models.Model):
+    class Meta:
+        db_table='etf'
+    time = models.TimeField()
+    etf_50 = models.FloatField(null=True)
+    etf_300 = models.FloatField(null=True)
+    es = models.FloatField(null=True)
+    etf_hs = models.FloatField(null=True)
+    etf_sz = models.FloatField(null=True)
 
 
 

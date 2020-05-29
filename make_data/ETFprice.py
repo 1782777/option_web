@@ -35,12 +35,12 @@ class ETFPrice:
 
             if self.isLoop:
                 self.makedata()
-            time.sleep(15)
+            time.sleep(5)
 
             
 
     def rest_df(self):
-        time_ = pd.date_range('20:30:00',freq='30S',periods=330*2+1)
+        time_ = pd.date_range('9:30:00',freq='30S',periods=330*2+1)
         self.df = pd.DataFrame(columns=['etf50','etf300','es','sz','hs'])
         self.df['time']= time_.time
         self.df['id'] = self.df.index
@@ -79,14 +79,17 @@ class ETFPrice:
             except:
                 needTry = True
         data = data[data.find('"') + 1: data.rfind('"')].split(',')
-        es = (float(data[3]) - float(data[2])) / float(data[2])*100
+        es = (float(data[0]) - float(data[7])) / float(data[7])*100
+        print(es)
 
         time_ = data[6]
         current_time= pd.to_datetime(time_).time()
         tmp = self.df[self.df['time']>current_time]
+        #print(tmp)
         if len(tmp.index) > 0:
             index = tmp.iloc[0]['id']
             self.df.loc[index,['etf50','etf300','es','sz','hs']] = [etf_50,etf_300,es,0,0]
+            print(self.df)
             engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
             self.df.to_sql('etf', engine, index=False, if_exists='replace')
 

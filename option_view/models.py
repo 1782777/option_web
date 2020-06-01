@@ -17,8 +17,8 @@ class iv_mean(models.Model):
     class Meta:
         db_table='iv_mean'
     time = models.TimeField()
-    iv = models.FloatField()
-    target = models.CharField(max_length=20)
+    iv_50 = models.FloatField()
+    iv_300 = models.FloatField()
 
 class volume(models.Model):
     class Meta:

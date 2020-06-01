@@ -12,12 +12,14 @@ def get_ivmean(request):
     ivall = iv_mean.objects.all()
     print (len(ivall))
     msg_dic ={'type':'onepath'}
-    ivlist = []
+    iv50list = []
+    iv300list = []
     timelist =[]
     for iv in ivall:
-        ivlist.append(iv.iv)
+        iv50list.append(iv.iv_50)
+        iv300list.append(iv.iv_300)
         timelist.append(iv.time)
-    dic ={'iv':ivlist,'time':timelist}
+    dic ={'iv_50':iv50list,'iv_300':iv300list,'time':timelist}
     return JsonResponse(dic)
 
 def get_volume(request):

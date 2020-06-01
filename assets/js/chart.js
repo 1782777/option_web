@@ -184,7 +184,7 @@ function Load_volume()
             //     var d = volume[i]/volume_mean[i];
             //     diff.push(d);
             // }
-            console.log(data);
+            //console.log(data);
             if (data) {
                 chart_volume.setOption({
                     series: [{
@@ -254,7 +254,7 @@ function Load_etf()
             //请求成功时执行该函数内容，result即为服务器返回的json对象
             CharETF.hideLoading();
             obj = JSON.parse(JSON.stringify(data))
-            console.log(obj.etf50);
+            //console.log(obj.etf50);
             if (data) {
                 CharETF.setOption({
                     series: [{
@@ -279,6 +279,77 @@ function Load_etf()
             //请求失败时执行该函数
             // alert("图表请求数据失败!");
             CharETF.hideLoading();
+        }
+   })
+}
+
+
+var CharIVMEAN ;
+function Chart_iv_mean(id){
+    CharIVMEAN = echarts.init(document.getElementById(id));
+    //var myChart = echarts.init(document.getElementById(id));
+    var option ={
+        title: {
+            text: '我的头发量2',
+            textStyle:{
+                fontSize:14
+            }
+        },
+        tooltip: {},
+        legend: {},
+        xAxis: {
+            data: []
+        },
+        yAxis: {},
+        series: [{
+            name: 'vi_50',
+            type: 'line',
+            data: []
+        },
+        {
+            name: 'vi_300',
+            type: 'line',
+            data: []
+        }]
+    };
+    CharIVMEAN.setOption(option);
+    Load_ivmean()
+    setInterval(function(){Load_ivmean()}, 10000); 
+}
+
+function Load_ivmean()
+{
+    $.ajax({
+        type : "get",
+        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        url : "http://127.0.0.1:8080/iv_mean/",    //请求发送到TestServlet处
+        data : {},
+        dataType : "json",        //返回数据形式为json
+        success : function(data) {
+            //请求成功时执行该函数内容，result即为服务器返回的json对象
+            CharIVMEAN.hideLoading();
+            obj = JSON.parse(JSON.stringify(data))
+            console.log(obj.iv_50);
+            if (data) {
+                CharIVMEAN.setOption({
+                    series: [{
+                        // 根据名字对应到相应的系列
+                        name: 'iv_50',
+                        data: data.iv_50
+                    },
+                    {
+                        // 根据名字对应到相应的系列
+                        name: 'iv_300',
+                        data: data.iv_300
+                    },
+                    ]
+                });
+            }
+        },
+        error : function(errorMsg) {
+            //请求失败时执行该函数
+            // alert("图表请求数据失败!");
+            CharIVMEAN.hideLoading();
         }
    })
 }

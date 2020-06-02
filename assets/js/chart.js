@@ -4,7 +4,7 @@ function init(){
     $.ajax({
         type : "get",
         async : false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://182.92.114.73/iv_mean/",    //请求发送到TestServlet处
+        url : "http://qiquan.pub/iv_mean/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",        //返回数据形式为json
         success : function(data) {
@@ -21,7 +21,7 @@ function init(){
     $.ajax({
         type : "get",
         async : false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://182.92.114.73/etf/",    //请求发送到TestServlet处
+        url : "http://qiquan.pub/etf/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",        //返回数据形式为json
         success : function(data) {
@@ -179,7 +179,7 @@ function Load_volume()
     $.ajax({
         type : "get",
         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://182.92.114.73/vol/",    //请求发送到TestServlet处
+        url : "http://qiquan.pub/vol/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",        //返回数据形式为json
         success : function(data) {
@@ -267,7 +267,7 @@ function Load_etf()
     $.ajax({
         type : "get",
         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://182.92.114.73/etf/",    //请求发送到TestServlet处
+        url : "http://qiquan.pub/etf/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",        //返回数据形式为json
         success : function(data) {
@@ -345,7 +345,7 @@ function Load_ivmean()
     $.ajax({
         type : "get",
         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://182.92.114.73/iv_mean/",    //请求发送到TestServlet处
+        url : "http://qiquan.pub/iv_mean/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",       //返回数据形式为json
         success : function(data) {

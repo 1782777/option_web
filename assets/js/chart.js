@@ -4,7 +4,7 @@ function init(){
     $.ajax({
         type : "get",
         async : false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://127.0.0.1:8080/iv_mean/",    //请求发送到TestServlet处
+        url : "http://182.92.114.73/iv_mean/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",        //返回数据形式为json
         success : function(data) {
@@ -21,7 +21,7 @@ function init(){
     $.ajax({
         type : "get",
         async : false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://127.0.0.1:8080/etf/",    //请求发送到TestServlet处
+        url : "http://182.92.114.73/etf/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",        //返回数据形式为json
         success : function(data) {
@@ -57,7 +57,7 @@ function Chart_north(id){
     legend: {},
     toolbox: {},      
     xAxis: [{         
-        data: jsonTime
+        data: []
     }],
     yAxis:  [{         
         axisLabel:{formatter:'{value}亿'}
@@ -154,7 +154,7 @@ function Chart_volume(id){
         legend: {},
         toolbox: {},      
         xAxis: [{         
-            data: jsonTime
+            data: []
         }],
         yAxis:  [{         
             min:0,
@@ -237,7 +237,7 @@ function Chart_etf(id){
         tooltip: {},
         legend: {},
         xAxis: {
-            data: jsonTimel
+            data: []
         },
         yAxis: {},
         series: [{
@@ -320,7 +320,7 @@ function Chart_iv_mean(id){
         tooltip: {},
         legend: {},
         xAxis: {
-            data: jsonTime,
+            data: [],
             minInterval: 1
         },
         yAxis: {},
@@ -355,9 +355,9 @@ function Load_ivmean()
             console.log(obj.iv_50);
             if (data) {
                 CharIVMEAN.setOption({
-                    title: {
-                        subtext:'测试一下副标题到底能写多长呢，会不会一下冲破列天际啊啊啊啊啊数数',
-                    },
+                    // title: {
+                    //     subtext:'测试一下副标题到底能写多长呢，会不会一下冲破列天际啊啊啊啊啊数数',
+                    // },
                     series: [{
                         // 根据名字对应到相应的系列
                         //name: 'iv_50',

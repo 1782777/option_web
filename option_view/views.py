@@ -10,7 +10,8 @@ def test_view(request):
 
 def get_ivmean(request):
     ivall = iv_mean.objects.all()
-    print (len(ivall))
+    # notnull = iv_mean.objects.exclude(iv_50=0) 
+    # print (notnull[1])
     msg_dic ={'type':'onepath'}
     iv50list = []
     iv300list = []
@@ -32,12 +33,13 @@ def get_volume(request):
 
 def get_etf(request):
     etf_ = etf.objects.all()
-    e50,e300,es = [],[],[]
+    e50,e300,es,timel = [],[],[],[]
     for e in etf_:
         e50.append(e.etf50)
         e300.append(e.etf300)
         es.append(e.es)
-    dic ={'etf50':e50,'etf300':e300,'es':es}
+        timel.append(e.time)
+    dic ={'etf50':e50,'etf300':e300,'es':es,'time':e.time}
     return JsonResponse(dic)
     
 # def test(request):

@@ -4,7 +4,7 @@ function init(){
     $.ajax({
         type : "get",
         async : false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://182.92.114.73/json/",    //请求发送到TestServlet处
+        url : "http://127.0.0.1:8080/iv_mean/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",        //返回数据形式为json
         success : function(data) {
@@ -13,6 +13,23 @@ function init(){
             obj = JSON.parse(JSON.stringify(data));
             jsonTime = obj.time;
             console.log(jsonTime);
+        },
+        error : function(errorMsg) {
+            console.log(" ");
+        }
+    })
+    $.ajax({
+        type : "get",
+        async : false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        url : "http://127.0.0.1:8080/etf/",    //请求发送到TestServlet处
+        data : {},
+        dataType : "json",        //返回数据形式为json
+        success : function(data) {
+            //请求成功时执行该函数内容，result即为服务器返回的json对象
+            
+            obj = JSON.parse(JSON.stringify(data));
+            jsonTimel = obj.time;
+            console.log(jsonTimel);
         },
         error : function(errorMsg) {
             console.log(" ");
@@ -29,7 +46,8 @@ function Chart_north(id){
     // 指定图表的配置项和数据
     var option = {
     title: {
-        text: '我的粉丝' ,  
+        text: '北向资金' ,  
+        subtext:'北向资金数重要的严控大盘涨跌指标',
         textStyle:{
             fontSize:14
         }      
@@ -39,24 +57,24 @@ function Chart_north(id){
     legend: {},
     toolbox: {},      
     xAxis: [{         
-        data: []
+        data: jsonTime
     }],
     yAxis:  [{         
         axisLabel:{formatter:'{value}亿'}
     }],
     series: [{
-        name: 'hgt',
+        name: '沪股通流入',
         type: 'line',
         data: []
         //areaStyle: {}       
     },
     {
-        name: 'sgt',
+        name: '深股通流入',
         type: 'line',
         data: []        
     },
     {
-        name: 'north',
+        name: '北向总体流入',
         type: 'line',
         data: []        
     }]
@@ -95,15 +113,15 @@ function Load_north()
                 chart_north.setOption({
                     
                     series: [{
-                        name: 'hgt',
+                        //ame: 'hgt',
                         data: n1
                     },
                     {
-                        name: 'sgt',
+                        //name: 'sgt',
                         data: n2
                     },
                     {
-                        name: 'north',
+                        //name: 'north',
                         data: n3
                     }]
                 });
@@ -124,7 +142,8 @@ function Chart_volume(id){
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '我的才艺',     
+            text: '上证50成交量对比',
+            subtext:'成交量大于1.5绝对多大涨，此值越大涨幅越大',     
             textStyle:{
                 fontSize:14
             }
@@ -135,14 +154,14 @@ function Chart_volume(id){
         legend: {},
         toolbox: {},      
         xAxis: [{         
-            data: []
+            data: jsonTime
         }],
         yAxis:  [{         
             min:0,
             max:2.5,
         }],
         series: [{
-            name: 'today/5day',
+            name: '成交量比例',
             type: 'line',
             data: [] ,
             areaStyle: {} 
@@ -188,7 +207,7 @@ function Load_volume()
             if (data) {
                 chart_volume.setOption({
                     series: [{
-                        name: 'today/5day',
+                        //name: 'today/5day',
                         data: data.vol
                     }]
                 });
@@ -209,7 +228,8 @@ function Chart_etf(id){
     //var myChart = echarts.init(document.getElementById(id));
     var option ={
         title: {
-            text: '我的头发量',
+            text: 'etf涨跌幅',
+            subtext:'包含美股期货涨跌对比',
             textStyle:{
                 fontSize:14
             }
@@ -217,21 +237,21 @@ function Chart_etf(id){
         tooltip: {},
         legend: {},
         xAxis: {
-            data: []
+            data: jsonTimel
         },
         yAxis: {},
         series: [{
-            name: '50',
+            name: '50etf',
             type: 'line',
             data: []
         },
         {
-            name: '300',
+            name: '300etf',
             type: 'line',
             data: []
         },
         {
-            name: 'es',
+            name: '美股期货',
             type: 'line',
             data: []
         }]
@@ -259,17 +279,17 @@ function Load_etf()
                 CharETF.setOption({
                     series: [{
                         // 根据名字对应到相应的系列
-                        name: '50',
+                        //name: '50',
                         data: data.etf50
                     },
                     {
                         // 根据名字对应到相应的系列
-                        name: '300',
+                        //name: '300',
                         data: data.etf300
                     },
                     {
                         // 根据名字对应到相应的系列
-                        name: 'es',
+                        //name: 'es',
                         data: data.es
                     },]
                 });
@@ -290,7 +310,9 @@ function Chart_iv_mean(id){
     //var myChart = echarts.init(document.getElementById(id));
     var option ={
         title: {
-            text: '我的头发量2',
+            text: '平均波动率',
+            subtext:'50期权和300期权多波动率日变化',
+            
             textStyle:{
                 fontSize:14
             }
@@ -298,16 +320,17 @@ function Chart_iv_mean(id){
         tooltip: {},
         legend: {},
         xAxis: {
-            data: []
+            data: jsonTime,
+            minInterval: 1
         },
         yAxis: {},
         series: [{
-            name: 'vi_50',
+            name: 'IV50',
             type: 'line',
             data: []
         },
         {
-            name: 'vi_300',
+            name: 'IV300',
             type: 'line',
             data: []
         }]
@@ -332,14 +355,17 @@ function Load_ivmean()
             console.log(obj.iv_50);
             if (data) {
                 CharIVMEAN.setOption({
+                    title: {
+                        subtext:'测试一下副标题到底能写多长呢，会不会一下冲破列天际啊啊啊啊啊数数',
+                    },
                     series: [{
                         // 根据名字对应到相应的系列
-                        name: 'iv_50',
+                        //name: 'iv_50',
                         data: data.iv_50
                     },
                     {
                         // 根据名字对应到相应的系列
-                        name: 'iv_300',
+                        //name: 'iv_300',
                         data: data.iv_300
                     },
                     ]

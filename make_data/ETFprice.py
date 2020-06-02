@@ -29,7 +29,7 @@ class ETFPrice:
             if c_time > NIGHT_TIME:
                 self.isLoop = False
             if not self.isLoop:
-                if c_time > MONING_TIME:
+                if c_time > MONING_TIME and c_time < NIGHT_TIME:
                     self.isLoop = True
                     self.rest_df()
 
@@ -47,7 +47,7 @@ class ETFPrice:
         #print(self.df)
 
     def makedata(self):
-        print('makedata')
+        print('etf_makedata')
         url = "http://hq.sinajs.cn/list=sh510050"
         needTry = True
         while needTry:

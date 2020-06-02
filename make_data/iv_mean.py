@@ -51,7 +51,7 @@ class iv_mean:
         df_pm['time']= time_PM.time
         self.df = pd.concat([df_am,df_pm],ignore_index=True)
         self.df['id'] = self.df.index
-        print(self.df)
+        #print(self.df)
 
     def makedata(self):
         print('makedata')
@@ -81,7 +81,7 @@ class iv_mean:
         # print(time_)
         current_time= pd.to_datetime(time_).time()
         tmp = self.df[self.df['time']>current_time]
-
+        print (tmp)
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         sql = ' select * from options; '
         df_option = pd.read_sql_query(sql, engine)
@@ -102,7 +102,7 @@ class iv_mean:
         mean_300 = np.average(iv_300,weights=weight_300)
         weight_50 = np.array(df_50['weight'])
         mean_50 = np.average(iv_50,weights=weight_50)
-        print(mean_50,mean_300)
+        #print(mean_50,mean_300)
 
         # self.df.loc[0,['iv_50','iv_300']] = [np.float(mean_50),np.float(mean_300)]
         # print(self.df)
@@ -111,8 +111,9 @@ class iv_mean:
 
         if len(tmp.index) > 0:
             index = tmp.iloc[0]['id']
-            self.df.loc[0,['iv_50','iv_300']] = [np.float(mean_50)*100,np.float(mean_300)*100]
-            print(self.df)
+            print(index)
+            self.df.loc[index,['iv_50','iv_300']] = [np.float(mean_50)*100,np.float(mean_300)*100]
+            #print(self.df)
             
             self.df.to_sql('iv_mean', engine, index=False, if_exists='replace')
 

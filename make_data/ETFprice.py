@@ -80,7 +80,7 @@ class ETFPrice:
                 needTry = True
         data = data[data.find('"') + 1: data.rfind('"')].split(',')
         es = (float(data[0]) - float(data[7])) / float(data[7])*100
-        print(es)
+        #print(es)
 
         time_ = data[6]
         current_time= pd.to_datetime(time_).time()
@@ -89,7 +89,7 @@ class ETFPrice:
         if len(tmp.index) > 0:
             index = tmp.iloc[0]['id']
             self.df.loc[index,['etf50','etf300','es','sz','hs']] = [etf_50,etf_300,es,0,0]
-            print(self.df)
+            #print(self.df)
             engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
             self.df.to_sql('etf', engine, index=False, if_exists='replace')
 

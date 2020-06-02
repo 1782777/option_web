@@ -322,9 +322,9 @@ function Load_ivmean()
     $.ajax({
         type : "get",
         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-        url : "http://127.0.0.1:8080/iv_mean/",    //请求发送到TestServlet处
+        url : "http://182.92.114.73/iv_mean/",    //请求发送到TestServlet处
         data : {},
-        dataType : "json",        //返回数据形式为json
+        dataType : "json",       //返回数据形式为json
         success : function(data) {
             //请求成功时执行该函数内容，result即为服务器返回的json对象
             CharIVMEAN.hideLoading();

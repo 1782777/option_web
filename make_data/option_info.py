@@ -43,7 +43,7 @@ class option:
     def rest_df(self):
         self.month =self.load_month()
         self.codes = self.get_allop_codes(self.month)
-        print(self.codes)
+        #print(self.codes)
         self.df_all=pd.DataFrame()
         # self.df['id'] = self.df.index
         
@@ -52,7 +52,7 @@ class option:
         url='http://stock.finance.sina.com.cn/futures/api/openapi.php/StockOptionService.getStockName'
         try:
             dates = get(url).json()['result']['data']['contractMonth']
-            print(dates)
+            #print(dates)
         except:
             pass
         return dates
@@ -151,7 +151,7 @@ class option:
         self.df_all['day']=days
         self.df_all['iv']=iv
         self.df_all['id'] = self.df_all.index
-        print(self.df_all)
+        #print(self.df_all)
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         self.df_all.to_sql('options', engine, index=False, if_exists='replace')
         

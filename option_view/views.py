@@ -39,7 +39,7 @@ def get_etf(request):
         e300.append(e.etf300)
         es.append(e.es)
         timel.append(e.time)
-    dic ={'etf50':e50,'etf300':e300,'es':es,'time':e.time}
+    dic ={'etf50':e50,'etf300':e300,'es':es,'time':timel}
     return JsonResponse(dic)
     
 # def test(request):

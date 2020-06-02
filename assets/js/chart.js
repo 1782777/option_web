@@ -57,7 +57,7 @@ function Chart_north(id){
     legend: {},
     toolbox: {},      
     xAxis: [{         
-        data: []
+        data: jsonTime
     }],
     yAxis:  [{         
         axisLabel:{formatter:'{value}亿'}
@@ -154,7 +154,7 @@ function Chart_volume(id){
         legend: {},
         toolbox: {},      
         xAxis: [{         
-            data: []
+            data: jsonTime
         }],
         yAxis:  [{         
             min:0,
@@ -237,7 +237,7 @@ function Chart_etf(id){
         tooltip: {},
         legend: {},
         xAxis: {
-            data: []
+            data: jsonTimel
         },
         yAxis: {},
         series: [{
@@ -320,7 +320,7 @@ function Chart_iv_mean(id){
         tooltip: {},
         legend: {},
         xAxis: {
-            data: [],
+            data: jsonTime,
             minInterval: 1
         },
         yAxis: {},

@@ -103,7 +103,7 @@ class iv_mean:
             mean_300 = np.average(iv_300,weights=weight_300)
             weight_50 = np.array(df_50['weight'])
             mean_50 = np.average(iv_50,weights=weight_50)
-            
+            #print(df_300['weight'],df_50['weight'])
             print(mean_50,mean_300)
             if len(tmp.index) > 0:
                 index = tmp.iloc[0]['id']

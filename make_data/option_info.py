@@ -36,7 +36,7 @@ class option:
 
             if self.isLoop:
                 self.makedata()
-            time.sleep(15)
+            time.sleep(22)
 
             
 
@@ -153,7 +153,10 @@ class option:
         self.df_all['id'] = self.df_all.index
         #print(self.df_all)
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
-        self.df_all.to_sql('options', engine, index=False, if_exists='replace')
+        try:
+            self.df_all.to_sql('options', engine, index=False, if_exists='replace')
+        except:
+            print('optioninfo sql error!')
         
 
 if __name__ == '__main__':

@@ -9,4 +9,6 @@ if __name__ == '__main__':
     ETFPrice()
     option()
     iv_mean()
-    a = input("input:")
+    while True:
+        print('alive')
+        time.sleep(100)

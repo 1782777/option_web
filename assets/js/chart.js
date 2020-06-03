@@ -156,10 +156,7 @@ function Chart_volume(id){
         xAxis: [{         
             data: jsonTime
         }],
-        yAxis:  [{         
-            min:0,
-            max:2.5,
-        }],
+        yAxis:  {scale:true,},
         series: [{
             name: '成交量比例',
             type: 'line',
@@ -239,7 +236,7 @@ function Chart_etf(id){
         xAxis: {
             data: jsonTimel
         },
-        yAxis: {},
+        yAxis: {scale:true,},
         series: [{
             name: '50etf',
             type: 'line',
@@ -323,7 +320,7 @@ function Chart_iv_mean(id){
             data: jsonTime,
             minInterval: 1
         },
-        yAxis: {},
+        yAxis: {scale:true,},
         series: [{
             name: 'IV50',
             type: 'line',

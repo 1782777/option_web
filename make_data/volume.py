@@ -59,6 +59,6 @@ class volume:
         df_sql = pd.DataFrame()
         df_sql['id'] = df_all.index
         df_sql['volume'] = df_all['chu']
-        print(df_sql)
+        #print(df_sql)
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         df_sql.to_sql('volume', engine, index=False, if_exists='replace')

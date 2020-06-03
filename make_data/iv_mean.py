@@ -81,7 +81,7 @@ class iv_mean:
         # print(time_)
         current_time= pd.to_datetime(time_).time()
         tmp = self.df[self.df['time']>current_time]
-        print (tmp)
+        #print (tmp)
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         sql = ' select * from options; '
         df_option = pd.read_sql_query(sql, engine)
@@ -111,7 +111,7 @@ class iv_mean:
 
         if len(tmp.index) > 0:
             index = tmp.iloc[0]['id']
-            print(index)
+            #print(index)
             self.df.loc[index,['iv_50','iv_300']] = [np.float(mean_50)*100,np.float(mean_300)*100]
             #print(self.df)
             

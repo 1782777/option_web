@@ -98,24 +98,19 @@ class iv_mean:
         df_50['weight'] = 1/ abs(df_50['eprice'].astype(float)- etf_50)
         iv_50 = np.array(df_50['iv'].astype(float))
         
-        weight_300 = np.array(df_300['weight'])
-        mean_300 = np.average(iv_300,weights=weight_300)
-        weight_50 = np.array(df_50['weight'])
-        mean_50 = np.average(iv_50,weights=weight_50)
-        #print(mean_50,mean_300)
-
-        # self.df.loc[0,['iv_50','iv_300']] = [np.float(mean_50),np.float(mean_300)]
-        # print(self.df)
+        try:
+            weight_300 = np.array(df_300['weight'])
+            mean_300 = np.average(iv_300,weights=weight_300)
+            weight_50 = np.array(df_50['weight'])
+            mean_50 = np.average(iv_50,weights=weight_50)
             
-        # self.df.to_sql('iv_mean', engine, index=False, if_exists='replace')
-
-        if len(tmp.index) > 0:
-            index = tmp.iloc[0]['id']
-            #print(index)
-            self.df.loc[index,['iv_50','iv_300']] = [np.float(mean_50)*100,np.float(mean_300)*100]
-            #print(self.df)
-            
-            self.df.to_sql('iv_mean', engine, index=False, if_exists='replace')
+            print(mean_50,mean_300)
+            if len(tmp.index) > 0:
+                index = tmp.iloc[0]['id']
+                self.df.loc[index,['iv_50','iv_300']] = [np.float(mean_50)*100,np.float(mean_300)*100]
+                self.df.to_sql('iv_mean', engine, index=False, if_exists='replace')
+        except:
+            print('avage error')
 
 if __name__ == '__main__':
     iv_mean()

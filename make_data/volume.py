@@ -22,6 +22,8 @@ class volume:
             time.sleep(15)
 
     def makedata(self):
+        # http://quote.eastmoney.com/stock_list.html
+        # http://img1.money.126.net/data/hs/kline/day/history/2020/0600795.json
         url = "http://img1.money.126.net/data/hs/time/4days/0000016.json"
         pf_volume = pd.DataFrame()
         try:

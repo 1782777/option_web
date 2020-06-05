@@ -7,7 +7,7 @@ import numpy as np
 
 class stork_volume:
     def __init__(self):
-        self.df_code=pd.DataFrame(columns=['code','name','vol','vol_day_mean'])
+        self.df_code=pd.DataFrame(columns=['code','name','vol','vol_day_mean','change'])
         self.initcode()
         self.loop()
 
@@ -64,18 +64,25 @@ class stork_volume:
         url = 'http://img1.money.126.net/data/hs/time/today/0%s.json' %code
         vol_list =[]
         #print(url)
-        data = get(url).json()['data']
+        dataall = get(url).json()
         #print (data)
+        data = dataall['data']
+        yestclose = dataall['yestclose']
+        print(yestclose)
         for k in range(len(data)):
             onemin = data[k][3]  
+            price = data[k][1]  
             vol_list.append(onemin)
         vol_nparr = np.array(vol_list)
         vol_sum = vol_nparr.sum()
+
+        change = (price - yestclose)/yestclose*100
         #print(vol_sum)
         
 
         res = vol_sum/self.df_code.loc[self.df_code['code']==code,'vol_day_mean']
         self.df_code.loc[self.df_code['code']==code,'vol']=res
+        self.df_code.loc[self.df_code['code']==code,'change']=change
         
 
     def makedata(self):
@@ -85,11 +92,10 @@ class stork_volume:
             code = tup.code
             if code[0] != '6' and code[0] != '0':
                 continue
-            i+=1
-            if i>20:
-                break
-            # self.one_stock_mean(code)
-            # self.one_stock(code)
+            # i+=1
+            # if i>20:
+            #     break
+           
             try:
                 self.one_stock_mean(code)
                 self.one_stock(code)
@@ -108,9 +114,21 @@ class stork_volume:
 
 if __name__ == '__main__':
     sv =stork_volume()
-    # df1 = pd.DataFrame(np.random.rand(16).reshape(4,4)*100,
-    #                columns = ['a','b','c','d'])
-    # print(df1)
 
-    # df1 = df1.sort_values(['a'],ascending=True)
-    # print(df1)
+    # url = 'http://img1.money.126.net/data/hs/time/today/0600031.json'
+    # vol_list =[]
+    #     #print(url)
+    # dataall = get(url).json()
+    #     #print (data)
+    # data = dataall['data']
+    # yestclose = dataall['yestclose']
+    # print(yestclose)
+    # for k in range(len(data)):
+    #     onemin = data[k][3]  
+    #     price = data[k][1]  
+    #     vol_list.append(onemin)
+    # vol_nparr = np.array(vol_list)
+    # vol_sum = vol_nparr.sum()
+
+    # change = (price - yestclose)/yestclose*100
+    # print(change)

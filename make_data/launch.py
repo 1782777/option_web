@@ -10,5 +10,5 @@ if __name__ == '__main__':
     option()
     iv_mean()
     while True:
-        print('alive')
+        # print('alive')
         time.sleep(100)

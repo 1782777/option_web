@@ -5,10 +5,12 @@ from stock_app.models import stock_vol
 
 # Create your views here.
 def stock_view(request):
-    return render('stock.html')
+    return HttpResponse("Hello world 111! ")
+    #return render('stock.html')
     #return render(request,'index.html')
 
 def get_vol(request):
+    return HttpResponse("Hello world ! ")
     stock_ = stock_vol.objects.all()
     vollist,namelist,codelist,changelist = [],[],[],[]
     i =0

@@ -81,6 +81,7 @@ class stork_volume:
             vol_list.append(volume)
         vol_nparr = np.array(vol_list)
         vol_mean = vol_nparr.mean()
+        print (vol_mean)
         self.df_code.loc[self.df_code['code']==code,'vol_day_mean']=vol_mean
 
     def one_stock(self,code):
@@ -112,7 +113,7 @@ class stork_volume:
         vol_sum = vol_nparr.sum()
 
         change = (price - yestclose)/yestclose*100
-        #print(vol_sum)
+        print(vol_sum)
         
 
         res = vol_sum/self.df_code.loc[self.df_code['code']==code,'vol_day_mean']
@@ -136,7 +137,7 @@ class stork_volume:
                 # self.df_code.loc[self.df_code['code']==code,'vol']=res
                 # print(code,':',res)
             except:
-                #print ('error')
+                print ('error')
                 pass 
 
         self.df_code = self.df_code.sort_values(['vol'], ascending = False) 
@@ -146,7 +147,7 @@ class stork_volume:
         # print(self.df_code[self.df_code['vol'] is not np.nan])
         #self.df_code.to_excel('./vol2.xlsx')
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
-        #self.df_code.to_sql('stock_vol', engine, index=False, if_exists='replace')
+        self.df_code.to_sql('stock_vol', engine, index=False, if_exists='replace')
         try:
             self.df_code.to_sql('stock_vol', engine, index=False, if_exists='replace')
         except:

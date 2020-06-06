@@ -113,7 +113,7 @@ class stork_volume:
         vol_sum = vol_nparr.sum()
 
         change = (price - yestclose)/yestclose*100
-        print(vol_sum)
+        print(change)
         
 
         res = vol_sum/self.df_code.loc[self.df_code['code']==code,'vol_day_mean']
@@ -143,15 +143,16 @@ class stork_volume:
         self.df_code = self.df_code.sort_values(['vol'], ascending = False) 
         self.df_code.reset_index(drop=True, inplace=True)
         self.df_code['id'] = self.df_code.index
-        #print(self.df_code)
+        print(self.df_code)
         # print(self.df_code[self.df_code['vol'] is not np.nan])
         #self.df_code.to_excel('./vol2.xlsx')
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         self.df_code.to_sql('stock_vol', engine, index=False, if_exists='replace')
-        try:
-            self.df_code.to_sql('stock_vol', engine, index=False, if_exists='replace')
-        except:
-            print('optioninfo sql error!')
+        print('finish')
+        # try:
+        #     self.df_code.to_sql('stock_vol', engine, index=False, if_exists='replace')
+        # except:
+        #     print('optioninfo sql error!')
             
             
  

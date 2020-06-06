@@ -38,7 +38,7 @@ class stork_volume:
                 codelist.append(code)
         self.df_code['code']=codelist
         self.df_code['name']=namelist
-        print(self.df_code)
+        # print(self.df_code)
 
     def rest_df(self):
         i = 0
@@ -53,7 +53,8 @@ class stork_volume:
             try:
                 self.one_stock_mean(code)
             except:
-                print("rest_error")
+                #print("rest_error")
+                pass
 
     def loop(self):
         while True:
@@ -102,7 +103,7 @@ class stork_volume:
         #print (data)
         data = dataall['data']
         yestclose = dataall['yestclose']
-        print(yestclose)
+        #print(yestclose)
         for k in range(len(data)):
             onemin = data[k][3]  
             price = data[k][1]  
@@ -135,13 +136,13 @@ class stork_volume:
                 # self.df_code.loc[self.df_code['code']==code,'vol']=res
                 # print(code,':',res)
             except:
-                print ('error')
+                #print ('error')
                 pass 
 
         self.df_code = self.df_code.sort_values(['vol'], ascending = False) 
         self.df_code.reset_index(drop=True, inplace=True)
         self.df_code['id'] = self.df_code.index
-        print(self.df_code)
+        #print(self.df_code)
         # print(self.df_code[self.df_code['vol'] is not np.nan])
         #self.df_code.to_excel('./vol2.xlsx')
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')

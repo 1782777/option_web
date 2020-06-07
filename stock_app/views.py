@@ -17,8 +17,8 @@ def get_vol(request):
     for s in stock_:
         namelist.append(s.name)
         codelist.append(s.code)
-        vollist.append(s.vol)
-        changelist.append(s.change)
+        vollist.append(round(s.vol,2))
+        changelist.append(round(s.change,2))
         i+=1
         if i>50:
             break

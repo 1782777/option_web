@@ -1,6 +1,6 @@
 import requests
 from requests import get
-from bs4 import    BeautifulSoup
+from bs4 import BeautifulSoup
 import time
 import pandas as pd
 import numpy as np
@@ -8,7 +8,7 @@ import datetime
 import threading
 import sqlalchemy
 
-MAXCOUNT = 5000
+MAXCOUNT = 20
 NIGHT_TIME = datetime.time(15,5,00)
 MONING_TIME = datetime.time(9,28,00)
 
@@ -44,17 +44,21 @@ class stork_volume:
         i = 0
         for tup in self.df_code.itertuples():
             code = tup.code
-            if code[0] != '6' and code[0] != '0':
-                continue
+            if code[0] == '6':
+                try:
+                    self.one_stock_mean('0',code)
+                except:
+                    pass
+            if code[0] == '0':
+                try:
+                    self.one_stock_mean('1',code)
+                except:
+                    pass
             i+=1
             if i>MAXCOUNT:
                 break
            
-            try:
-                self.one_stock_mean(code)
-            except:
-                #print("rest_error")
-                pass
+            
 
     def loop(self):
         while True:
@@ -70,8 +74,8 @@ class stork_volume:
                 self.makedata()
             time.sleep(22)  
 
-    def one_stock_mean(self,code):
-        url = 'http://img1.money.126.net/data/hs/kline/day/history/2020/0%s.json' %code
+    def one_stock_mean(self,code,starturl):
+        url = 'http://img1.money.126.net/data/hs/kline/day/history/2020/%s%s.json' %(starturl,code)
         vol_list =[]
         #print(url)
         data = get(url).json()['data']
@@ -84,20 +88,8 @@ class stork_volume:
         print (vol_mean)
         self.df_code.loc[self.df_code['code']==code,'vol_day_mean']=vol_mean
 
-    def one_stock(self,code):
-        # url = 'http://img1.money.126.net/data/hs/kline/day/history/2020/0%s.json' %code
-        # vol_list =[]
-        
-        # data = get(url).json()['data']
-        # for d in range(len(data)-1,len(data)-10,-1):
-        #     volume = data[d][5]
-        #     vol_list.append(volume)
-        # vol_nparr = np.array(vol_list)
-        # vol_mean = vol_nparr.mean()
-        # #print(vol_mean)   
-        
-
-        url = 'http://img1.money.126.net/data/hs/time/today/0%s.json' %code
+    def one_stock(self,code,starturl):
+         url = 'http://img1.money.126.net/data/hs/time/today/%s%s.json' %(starturl,code)
         vol_list =[]
         #print(url)
         dataall = get(url).json()
@@ -120,25 +112,27 @@ class stork_volume:
         self.df_code.loc[self.df_code['code']==code,'vol']=res
         self.df_code.loc[self.df_code['code']==code,'change']=change
         
+    def current(self):
+        pass
 
     def makedata(self):
         res_list =[]
         i = 0
         for tup in self.df_code.itertuples():
             code = tup.code
-            if code[0] != '6' and code[0] != '0':
-                continue
+            if code[0] == '6':
+                try:
+                    self.one_stock_mean('0',code)
+                except:
+                    pass
+            if code[0] == '0':
+                try:
+                    self.one_stock_mean('1',code)
+                except:
+                    pass
             i+=1
             if i>MAXCOUNT:
                 break
-           
-            try:
-                self.one_stock(code)
-                # self.df_code.loc[self.df_code['code']==code,'vol']=res
-                # print(code,':',res)
-            except:
-                print ('error')
-                pass 
 
         self.df_code = self.df_code.sort_values(['vol'], ascending = False) 
         self.df_code.reset_index(drop=True, inplace=True)

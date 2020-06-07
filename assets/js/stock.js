@@ -16,7 +16,7 @@ function Load_stock_vol()
 {
     $.ajax({
         type : "get",
-        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        async : false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
         url : "http://qiquan.pub/stock/vol/",    //请求发送到TestServlet处
         data : {},
         dataType : "json",        //返回数据形式为json

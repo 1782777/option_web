@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path('', views.test_view),
     # path('json/', views.test),
@@ -10,4 +11,5 @@ urlpatterns = [
     path('iv_mean/', views.get_ivmean),
     path('vol/', views.get_volume),
     path('etf/', views.get_etf),
+    
 ]

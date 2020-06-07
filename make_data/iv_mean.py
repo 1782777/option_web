@@ -54,7 +54,7 @@ class iv_mean:
         #print(self.df)
 
     def makedata(self):
-        print('iv_mean_makedata')
+        #print('iv_mean_makedata')
         url = "http://hq.sinajs.cn/list=sh510050"
         needTry = True
         while needTry:

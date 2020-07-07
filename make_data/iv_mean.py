@@ -112,8 +112,30 @@ class iv_mean:
         except:
             print('avage error')
 
+class iv_bynet:
+    def __init__(self):
+        self.t = threading.Thread(target=self.loop)
+        self.t.setDaemon(True)
+        self.t.start()
+
+    def loop(self):
+        while True:
+            self.get_QVIX()
+            time.sleep(15)
+
+    def get_QVIX(self):
+        url ='http://1.optbbs.com/d/csv/d/data.csv'
+        needTry = True
+        while needTry:
+            try:
+                df = pd.read_csv(url)
+                needTry = False
+            except:
+                needTry = True
+        print(df['QVIX'].values)
+
 if __name__ == '__main__':
-    iv_mean()
+    iv_bynet()
     a = input("input:")
 
     

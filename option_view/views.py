@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from option_view.models import options,iv_mean,volume,etf
+import pandas as pd
 
 # Create your views here.
 def test_view(request):
@@ -9,17 +10,26 @@ def test_view(request):
     #return render(request,'index.html')
 
 def get_ivmean(request):
-    ivall = iv_mean.objects.all()
-    # notnull = iv_mean.objects.exclude(iv_50=0) 
-    # print (notnull[1])
-    msg_dic ={'type':'onepath'}
-    iv50list = []
-    iv300list = []
-    timelist =[]
-    for iv in ivall:
-        iv50list.append(iv.iv_50)
-        iv300list.append(iv.iv_300)
-        timelist.append(iv.time)
+    # ivall = iv_mean.objects.all()
+    # msg_dic ={'type':'onepath'}
+    # iv50list = []
+    # iv300list = []
+    # timelist =[]
+    # for iv in ivall:
+    #     iv50list.append(iv.iv_50)
+    #     iv300list.append(iv.iv_300)
+    #     timelist.append(iv.time)
+    url ='http://1.optbbs.com/d/csv/d/data.csv'
+    needTry = True
+    while needTry:
+        try:
+            df = pd.read_csv(url)
+            needTry = False
+        except:
+            needTry = True
+    iv50list = df['QVIX'].values
+    iv300list = df['QVIX'].values
+    timelist = df['Time'].values
     dic ={'iv_50':iv50list,'iv_300':iv300list,'time':timelist}
     return JsonResponse(dic)
 

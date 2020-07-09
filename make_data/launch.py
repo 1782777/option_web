@@ -1,7 +1,7 @@
 from volume import volume
 from ETFprice import ETFPrice
 from option_info import option
-from iv_mean import iv_mean iv_bynet
+from iv_mean import iv_bynet
 from stock import stork_volume
 import time
 

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from option_view.models import options,iv_mean,volume,etf
+
+import logging
 import pandas as pd
 
 # Create your views here.
@@ -11,26 +13,34 @@ def test_view(request):
     #return render(request,'index.html')
 
 def get_ivmean(request):
-    ivall = iv_mean.objects.all()
+    #ivall = iv_mean.objects.all()
+    print('iv!!!')
+    logger = logging.getLogger('django')
+    logger.info('123123')
+
     msg_dic ={'type':'onepath'}
     iv50list = []
     iv300list = []
     timelist =[]
-    for iv in ivall:
-        iv50list.append(iv.iv_50)
-        iv300list.append(iv.iv_300)
-        timelist.append(iv.time)
-    # url ='http://1.optbbs.com/d/csv/d/data.csv'
-    # needTry = True
-    # while needTry:
-    #     try:
-    #         df = pd.read_csv(url)
-    #         needTry = False
-    #     except:
-    #         needTry = True
-    # iv50list = df['QVIX'].values
-    # iv300list = df['QVIX'].values
-    # timelist = df['Time'].values
+    # for iv in ivall:
+    #     iv50list.append(iv.iv_50)
+    #     iv300list.append(iv.iv_300)
+    #     timelist.append(iv.time)
+
+    url ='http://1.optbbs.com/d/csv/d/data.csv'
+    url300 = 'https://1.optbbs.com/d/csv/d/vix300.csv?v='
+    needTry = True
+    
+    try:
+        df = pd.read_csv(url)
+        df300 = pd.read_csv(url300)
+        needTry = False
+    except:
+        print('iv_load wrong')
+        needTry = True
+    iv50list = df['QVIX'].values.tolist()
+    iv300list = df300['QVIX'].values.tolist()
+    timelist = df300['Time'].values.tolist()
     dic ={'iv_50':iv50list,'iv_300':iv300list,'time':timelist}
     return JsonResponse(dic)
 

@@ -35,6 +35,7 @@ def get_ivmean(request):
         df = pd.read_csv(url)
         df300 = pd.read_csv(url300)
         needTry = False
+        print(df,df300)
     except:
         print('iv_load wrong')
         needTry = True
@@ -42,6 +43,7 @@ def get_ivmean(request):
     iv300list = df300['QVIX'].values.tolist()
     timelist = df300['Time'].values.tolist()
     dic ={'iv_50':iv50list,'iv_300':iv300list,'time':timelist}
+    print(dic)
     return JsonResponse(dic)
 
 def get_volume(request):

@@ -127,6 +127,7 @@ class iv_mean:
 
 class iv_bynet:
     def __init__(self):
+        print('iv_bynet')
         self.df = pd.DataFrame(columns=['time,iv_50,iv_300'])
 
         time_AM = pd.date_range('9:30:00',freq='60S',periods=120+1)
@@ -149,6 +150,7 @@ class iv_bynet:
             time.sleep(15)
 
     def get_QVIX(self):
+        print('get_QVIX')
         url ='http://1.optbbs.com/d/csv/d/data.csv'
         url300 = 'https://1.optbbs.com/d/csv/d/vix300.csv'
         needTry = True
@@ -164,9 +166,11 @@ class iv_bynet:
         self.df['iv_300'] = df300['QVIX'].astype(float)
         # self.df['id'] = self.df.index
         # self.df['time'] = self.df.index
+        print('get_QVIXmid')
         print(self.df)
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         self.df.to_sql('iv_mean', engine, index=False, if_exists='replace')
+        print('get_QVIXfinish')
 
 if __name__ == '__main__':
     iv = iv_bynet()

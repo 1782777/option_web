@@ -10,7 +10,7 @@ if __name__ == '__main__':
     ETFPrice()
     option()
     get_QVIX()
-    stork_volume()
+    # stork_volume()
     while True:
         # print('alive')
         time.sleep(100)

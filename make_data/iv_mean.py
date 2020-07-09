@@ -19,7 +19,7 @@ class iv_mean:
         print('iv_mean')
         self.isLoop =True
         self.rest_df()
-        # print(self.df)
+        
 
         self.t = threading.Thread(target=self.loop)
         self.t.setDaemon(True)
@@ -39,7 +39,20 @@ class iv_mean:
                 self.makedata()
             time.sleep(15)
 
-            
+    def load_VX(self):
+        url ='http://1.optbbs.com/d/csv/d/data.csv'
+        url300 = 'https://1.optbbs.com/d/csv/d/vix300.csv'
+        needTry = True
+        # df =pd.DataFrame()
+        # df300 =pd.DataFrame()   
+        try:
+            df = pd.read_csv(url)
+            df300 = pd.read_csv(url300)
+            needTry = False
+            print(df,df300)
+        except:
+            print('iv_load wrong')
+            needTry = True        
 
     def rest_df(self):
         time_AM = pd.date_range('9:30:00',freq='60S',periods=120+1)
@@ -114,6 +127,18 @@ class iv_mean:
 
 class iv_bynet:
     def __init__(self):
+        self.df = pd.DataFrame(columns=['time,iv_50,iv_300'])
+
+        time_AM = pd.date_range('9:30:00',freq='60S',periods=120+1)
+        time_PM = pd.date_range('13:00:00',freq='60S',periods=120+1)
+       
+        df_am = pd.DataFrame(columns=['iv_50','iv_300'])
+        df_pm = pd.DataFrame(columns=['iv_50','iv_300'])
+        df_am['time']= time_AM.time
+        df_pm['time']= time_PM.time
+        self.df = pd.concat([df_am,df_pm],ignore_index=True)
+        self.df['id'] = self.df.index
+
         self.t = threading.Thread(target=self.loop)
         self.t.setDaemon(True)
         self.t.start()
@@ -125,17 +150,27 @@ class iv_bynet:
 
     def get_QVIX(self):
         url ='http://1.optbbs.com/d/csv/d/data.csv'
+        url300 = 'https://1.optbbs.com/d/csv/d/vix300.csv'
         needTry = True
         while needTry:
             try:
                 df = pd.read_csv(url)
+                df300 = pd.read_csv(url300)
                 needTry = False
             except:
                 needTry = True
-        print(df['QVIX'].values)
+        
+        self.df['iv_50'] = df['QVIX'].astype(float)
+        self.df['iv_300'] = df300['QVIX'].astype(float)
+        # self.df['id'] = self.df.index
+        # self.df['time'] = self.df.index
+        print(self.df)
+        engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
+        self.df.to_sql('iv_mean', engine, index=False, if_exists='replace')
 
 if __name__ == '__main__':
-    iv_bynet()
+    iv = iv_bynet()
+    
     a = input("input:")
 
     

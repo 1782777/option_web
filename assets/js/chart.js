@@ -339,6 +339,7 @@ function Chart_iv_mean(id){
 
 function Load_ivmean()
 {
+    console.log("Load_ivmean!!!!");
     $.ajax({
         type : "get",
         async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
@@ -346,6 +347,7 @@ function Load_ivmean()
         data : {},
         dataType : "json",       //返回数据形式为json
         success : function(data) {
+            console.log("Load_ivmean data sucsses!!");
             //请求成功时执行该函数内容，result即为服务器返回的json对象
             CharIVMEAN.hideLoading();
             obj = JSON.parse(JSON.stringify(data))
@@ -372,7 +374,9 @@ function Load_ivmean()
         error : function(errorMsg) {
             //请求失败时执行该函数
             // alert("图表请求数据失败!");
+            console.log("Load_ivmean fail");
             CharIVMEAN.hideLoading();
         }
    })
+   console.log("Load_ivmean");
 }

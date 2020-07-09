@@ -160,6 +160,7 @@ class iv_bynet:
                 df300 = pd.read_csv(url300)
                 needTry = False
             except:
+                print('get_QVIXmid_needtry')
                 needTry = True
         
         self.df['iv_50'] = df['QVIX'].astype(float)

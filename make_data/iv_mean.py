@@ -157,7 +157,9 @@ class iv_bynet:
         while needTry:
             try:
                 df = pd.read_csv(url)
+                print('50 is ok')
                 df300 = pd.read_csv(url300)
+                print('300 is ok')
                 needTry = False
             except:
                 print('get_QVIXmid_needtry')

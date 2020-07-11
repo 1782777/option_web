@@ -156,6 +156,7 @@ class iv_bynet:
         needTry = True
         while needTry:
             try:
+                print('50 try')
                 df = pd.read_csv(url)
                 print('50 is ok')
                 df300 = pd.read_csv(url300)

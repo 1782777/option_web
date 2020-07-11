@@ -9,6 +9,7 @@ import sqlalchemy
 import threading
 import datetime
 import numpy as np
+from urllib import request
 
 NIGHT_TIME = datetime.time(15,5,00)
 MONING_TIME = datetime.time(9,28,00)
@@ -153,9 +154,14 @@ class iv_bynet:
         print('get_QVIX')
         url ='https://1.optbbs.com/d/csv/d/data.csv'
         url300 = 'https://1.optbbs.com/d/csv/d/vix300.csv'
+        response = request.urlopen(url)
+        csv = response.read()
+        csv_str = str(csv)
+        print(csv_str)
         needTry = True
         while needTry:
             try:
+                
                 print('50 try')
                 df = pd.read_csv(url)
                 print('50 is ok')

@@ -151,7 +151,7 @@ class iv_bynet:
 
     def get_QVIX(self):
         print('get_QVIX')
-        url ='http://1.optbbs.com/d/csv/d/data.csv'
+        url ='https://1.optbbs.com/d/csv/d/data.csv'
         url300 = 'https://1.optbbs.com/d/csv/d/vix300.csv'
         needTry = True
         while needTry:

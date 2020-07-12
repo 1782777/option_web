@@ -184,8 +184,9 @@ class iv_bynet:
 
 if __name__ == '__main__':
     iv = iv_mean()
-    
-    a = input("input:")
+    while True:
+        a = input("input:")
+        print(a)
 
     
 

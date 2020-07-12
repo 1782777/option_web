@@ -29,12 +29,12 @@ class iv_mean:
     def loop(self):
         while True:
             c_time = datetime.datetime.now().time()
-            if c_time > NIGHT_TIME:
-                self.isLoop = False
-            if not self.isLoop:
-                if c_time > MONING_TIME and c_time < NIGHT_TIME:
-                    self.isLoop = True
-                    self.rest_df()
+            # if c_time > NIGHT_TIME:
+            #     self.isLoop = False
+            # if not self.isLoop:
+            #     if c_time > MONING_TIME and c_time < NIGHT_TIME:
+            #         self.isLoop = True
+            #         self.rest_df()
 
             if self.isLoop:
                 self.makedata()
@@ -152,7 +152,7 @@ class iv_bynet:
 
     def get_QVIX(self):
         print('get_QVIX')
-        url ='https://1.optbbs.com/d/csv/d/data.csv'
+        url ='http://1.optbbs.com/d/csv/d/data.csv?v=1594481240740'
         url300 = 'https://1.optbbs.com/d/csv/d/vix300.csv'
         response = request.urlopen(url)
         csv = response.read()
@@ -166,10 +166,10 @@ class iv_bynet:
                 df = pd.read_csv(url)
                 print('50 is ok')
                 df300 = pd.read_csv(url300)
-                print('300 is ok')
+                #print('300 is ok')
                 needTry = False
             except:
-                print('get_QVIXmid_needtry')
+                #print('get_QVIXmid_needtry')
                 needTry = True
         
         self.df['iv_50'] = df['QVIX'].astype(float)
@@ -183,7 +183,7 @@ class iv_bynet:
         print('get_QVIXfinish')
 
 if __name__ == '__main__':
-    iv = iv_bynet()
+    iv = iv_mean()
     
     a = input("input:")
 

@@ -98,7 +98,10 @@ class iv_mean:
         #print (tmp)
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         sql = ' select * from options; '
-        df_option = pd.read_sql_query(sql, engine)
+        try:
+            df_option = pd.read_sql_query(sql, engine)
+        except:
+            print('select * from options error')
         # print(df_option,etf_50,etf_300)
 
         df_50 = df_option[df_option.name.str.contains('50ETF')]

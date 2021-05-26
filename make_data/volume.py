@@ -105,7 +105,7 @@ class volume:
         pf_volume['today'] = today_list
 
         pf_volume['res'] = pf_volume['today'] / pf_volume['Col_sum']
-        pf_volume['res'].plot()
+        # pf_volume['res'].plot()
         # print(pf_volume)
         # plt.show()
         df_sql = pd.DataFrame()

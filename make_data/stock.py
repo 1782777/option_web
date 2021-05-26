@@ -165,7 +165,7 @@ class stork_volume:
         self.df_code = self.df_code.sort_values(['vol'], ascending = False) 
         self.df_code.reset_index(drop=True, inplace=True)
         self.df_code['id'] = self.df_code.index
-        #print(self.df_code)
+        print(self.df_code)
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         try:
             self.df_code.to_sql('stock_vol', engine, index=False, if_exists='replace')

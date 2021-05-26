@@ -7,18 +7,20 @@ import json
 import pandas as pd
 import sqlalchemy
 import threading
+# import matplotlib.pyplot as plt
 
 class volume:
 
     def __init__(self):
         print('init_volume')
+        # self.makedata_dfcf()
         self.t = threading.Thread(target=self.loop)
         self.t.setDaemon(True)
         self.t.start()
 
     def loop(self):
         while True:
-            self.makedata()
+            self.makedata_dfcf()
             time.sleep(15)
 
     def makedata(self):
@@ -51,6 +53,7 @@ class volume:
                 onemin = data[k][3]  
                 list_day.append(onemin)
         except:
+            print('erorr')
             pass 
         
         df_today = pd.DataFrame(list_day, columns=['today'])
@@ -61,6 +64,59 @@ class volume:
         df_sql = pd.DataFrame()
         df_sql['id'] = df_all.index
         df_sql['volume'] = df_all['chu']
-        #print(df_sql)
+        print(df_sql)
+        print('---------------------------------')
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         df_sql.to_sql('volume', engine, index=False, if_exists='replace')
+
+    def makedata_dfcf(self):
+        pf_volume = pd.DataFrame()
+        url = 'http://push2his.eastmoney.com/api/qt/stock/trends2/get?secid=1.000016&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6%2Cf7%2Cf8%2Cf9%2Cf10%2Cf11&fields2=f51%2Cf53%2Cf56%2Cf58&iscr=0&ndays=5'
+        data =[]
+        try:
+            data = get(url).json()['data']['trends']
+            print(len(data))
+
+        except:
+            pass
+        lengh = len(data)
+        arr = []
+        for i in range(241):
+            arr.append(0) 
+
+        for i in range(4): 
+            list_day =[]
+            for j in range(0,241):
+                #print(data[241*i+j].split(' ')[1].split(',')[2])
+                str_vol = data[241*i+j].split(' ')[1].split(',')[2]
+                int_vol = int(str_vol)
+                arr[j] = arr[j]+int_vol
+                list_day.append(int_vol)
+                # print(int_vol)
+            pf_volume[i] = list_day    
+        # print(arr)
+        
+        pf_volume['Col_sum'] = pf_volume.apply(lambda x: x.sum()/4, axis=1)
+        today_list = []
+        for i in range(241*4,lengh):
+            str_vol = data[i].split(' ')[1].split(',')[2]
+            int_vol = int(str_vol)
+            today_list.append(int_vol)
+        pf_volume['today'] = today_list
+
+        pf_volume['res'] = pf_volume['today'] / pf_volume['Col_sum']
+        pf_volume['res'].plot()
+        # print(pf_volume)
+        # plt.show()
+        df_sql = pd.DataFrame()
+        df_sql['id'] = pf_volume.index
+        df_sql['volume'] = pf_volume['res']
+        print(df_sql)
+        engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
+        df_sql.to_sql('volume', engine, index=False, if_exists='replace')
+        #http://push2.eastmoney.com/api/qt/stock/trends2/get?secid=1.000016&fields1=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13&fields2=f51,f52,f53,f54,f55,f56,f57,f58&ut=fa5fd1943c7b386f172d6893dbfba10b
+
+if __name__ == '__main__':
+    volume()
+
+    a = input("input:")

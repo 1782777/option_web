@@ -98,10 +98,13 @@ class volume:
         
         pf_volume['Col_sum'] = pf_volume.apply(lambda x: x.sum()/4, axis=1)
         today_list = []
-        for i in range(241*4,lengh):
-            str_vol = data[i].split(' ')[1].split(',')[2]
-            int_vol = int(str_vol)
+        for i in range(241*4,241*5):
+            int_vol= 0
+            if(i<lengh):
+                str_vol = data[i].split(' ')[1].split(',')[2]
+                int_vol = int(str_vol)
             today_list.append(int_vol)
+        print(today_list)
         pf_volume['today'] = today_list
 
         pf_volume['res'] = pf_volume['today'] / pf_volume['Col_sum']

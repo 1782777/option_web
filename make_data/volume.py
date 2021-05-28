@@ -104,15 +104,16 @@ class volume:
                 str_vol = data[i].split(' ')[1].split(',')[2]
                 int_vol = int(str_vol)
             today_list.append(int_vol)
-        print(today_list)
+        # print(today_list)
         pf_volume['today'] = today_list
         pf_volume= pf_volume.cumsum()
         for i in range(lengh,241*5):
-            pf_volume.at[i] =0
+            pf_volume.at[i] =100
+            pf_volume.at[i,'today'] =1
         
-        print(pf_volume)
+        # print(pf_volume)
         pf_volume['res'] = pf_volume['today'] / pf_volume['Col_sum']
-        
+        # print(pf_volume)
         # pf_volume['res'].plot()
         # print(pf_volume)
         # plt.show()
@@ -121,7 +122,7 @@ class volume:
         
         df_sql['volume'] = pf_volume['res']
         
-        # print(df_sql)
+        print(df_sql)
         engine = sqlalchemy.create_engine('mysql+pymysql://root:root@localhost/option_data?charset=utf8')
         df_sql.to_sql('volume', engine, index=False, if_exists='replace')
         #http://push2.eastmoney.com/api/qt/stock/trends2/get?secid=1.000016&fields1=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13&fields2=f51,f52,f53,f54,f55,f56,f57,f58&ut=fa5fd1943c7b386f172d6893dbfba10b

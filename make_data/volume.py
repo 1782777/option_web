@@ -107,13 +107,17 @@ class volume:
         print(today_list)
         pf_volume['today'] = today_list
         pf_volume= pf_volume.cumsum()
+        pf_volume.at[241*5,'today'] =0
+        pf_volume.at[241*5-1,'today'] =0
         print(pf_volume)
         pf_volume['res'] = pf_volume['today'] / pf_volume['Col_sum']
+        
         # pf_volume['res'].plot()
         # print(pf_volume)
         # plt.show()
+
         df_sql = pd.DataFrame()
-        df_sql['id'] = pf_volume.index
+        
         df_sql['volume'] = pf_volume['res']
         
         # print(df_sql)

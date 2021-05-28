@@ -108,7 +108,7 @@ class volume:
         pf_volume['today'] = today_list
         pf_volume= pf_volume.cumsum()
         for i in range(lengh,241*5):
-            pf_volume.at[i,'today'] =0
+            pf_volume.at[i] =0
         
         print(pf_volume)
         pf_volume['res'] = pf_volume['today'] / pf_volume['Col_sum']
